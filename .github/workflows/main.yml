@@ -25,15 +25,15 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install yfinance pandas numpy matplotlib plotly seaborn pytz
-        
+    
     - name: Run S&P 500 analysis (Full Version)
       run: |
         python sp500_monitor.py || echo "Full version failed, trying simple version"
-        
-    - name: Run Simple Dashboard (Backup)
-      run: |
-        python simple_dashboard.py
-        
+    
+    # - name: Run Simple Dashboard (Backup)
+    #   run: |
+    #     python simple_dashboard.py
+                
     - name: Create temporary deployment directory
       run: |
         # Create temp directory outside of git repo

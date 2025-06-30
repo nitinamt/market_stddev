@@ -2,4 +2,5 @@
 *.log
 *.json
 *.html
+__pycache__
 

@@ -22,9 +22,9 @@ def get_data_and_create_simple_dashboard():
         ma_200 = closes.rolling(window=200).mean()
         std_200 = closes.rolling(window=200).std()
         
-        current_price = closes.iloc[-1]
-        current_ma = ma_200.iloc[-1]
-        current_std = std_200.iloc[-1]
+        current_price = closes.iloc[-1].values[0]
+        current_ma = ma_200.iloc[-1].values[0]
+        current_std = std_200.iloc[-1].values[0]
         std_away = (current_price - current_ma) / current_std
         
         # Get last 30 days for chart data
@@ -278,7 +278,7 @@ def get_data_and_create_simple_dashboard():
             'std_away': float(std_away),
             'status': status,
             'direction': direction,
-            'alert': 2.0 <= abs_std <= 3.0
+            'alert': bool(2.0 <= abs_std <= 3.0)
         }
         
         with open('sp500_data.json', 'w') as f:

@@ -1,8 +1,8 @@
 name: S&P 500 Monitor with Web Dashboard
 on:
   schedule:
-    # Run every hour from 9 AM to 4 PM ET, Monday to Friday
-    - cron: '0 14-21 * * 1-5'  # UTC time (ET + 5 hours)
+    # Run every hour from 8 AM to 3 PM ET, Monday to Friday
+    - cron: '30 13-20/2 * * 1-5'  # UTC time (ET + 5 hours)
   workflow_dispatch:  # Allow manual trigger
 
 jobs:

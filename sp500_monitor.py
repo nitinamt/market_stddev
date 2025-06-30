@@ -6,7 +6,12 @@ import pytz
 import logging
 import os
 import json
+
+# Set matplotlib backend before importing pyplot
+import matplotlib
+matplotlib.use('Agg')  # Use non-interactive backend
 import matplotlib.pyplot as plt
+
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.offline as pyo
@@ -145,6 +150,11 @@ def create_interactive_plot(data, metrics):
     try:
         # Calculate rolling statistics for the entire dataset
         closes = data['Close'].dropna()
+        
+        if len(closes) < 200:
+            logging.error(f"Insufficient data for plotting: {len(closes)} days")
+            return None
+            
         ma_200 = closes.rolling(window=200).mean()
         std_200 = closes.rolling(window=200).std()
         
@@ -154,15 +164,26 @@ def create_interactive_plot(data, metrics):
         upper_3std = ma_200 + (3 * std_200)
         lower_3std = ma_200 - (3 * std_200)
         
-        # Get last 60 days for cleaner visualization
-        last_60_days = -60
-        dates = closes.index[last_60_days:]
-        prices = closes.iloc[last_60_days:]
-        ma_200_plot = ma_200.iloc[last_60_days:]
-        upper_2std_plot = upper_2std.iloc[last_60_days:]
-        lower_2std_plot = lower_2std.iloc[last_60_days:]
-        upper_3std_plot = upper_3std.iloc[last_60_days:]
-        lower_3std_plot = lower_3std.iloc[last_60_days:]
+        # Get last 60 days for cleaner visualization (ensure we have enough data)
+        last_60_days = min(-60, -len(closes) + 200)  # Don't go before we have MA data
+        
+        # Skip NaN values for plotting
+        valid_indices = ~ma_200.isna()
+        plot_data = closes[valid_indices]
+        plot_dates = closes.index[valid_indices]
+        
+        if len(plot_data) < 60:
+            plot_start = 0
+        else:
+            plot_start = len(plot_data) - 60
+            
+        dates = plot_dates[plot_start:]
+        prices = plot_data.iloc[plot_start:]
+        ma_200_plot = ma_200[valid_indices].iloc[plot_start:]
+        upper_2std_plot = upper_2std[valid_indices].iloc[plot_start:]
+        lower_2std_plot = lower_2std[valid_indices].iloc[plot_start:]
+        upper_3std_plot = upper_3std[valid_indices].iloc[plot_start:]
+        lower_3std_plot = lower_3std[valid_indices].iloc[plot_start:]
         
         # Create subplot
         fig = make_subplots(
@@ -230,10 +251,19 @@ def create_interactive_plot(data, metrics):
         
         # Standard deviation subplot
         std_away_series = (closes - ma_200) / std_200
-        std_away_plot = std_away_series.iloc[last_60_days:]
+        std_away_plot = std_away_series[valid_indices].iloc[plot_start:]
         
         # Color points based on alert zone
-        colors = ['red' if abs(x) >= 2 and abs(x) <= 3 else 'green' if abs(x) < 2 else 'darkred' for x in std_away_plot]
+        colors = []
+        for x in std_away_plot:
+            if pd.isna(x):
+                colors.append('gray')
+            elif abs(x) >= 2 and abs(x) <= 3:
+                colors.append('red')
+            elif abs(x) < 2:
+                colors.append('green')
+            else:
+                colors.append('darkred')
         
         fig.add_trace(
             go.Scatter(
@@ -255,9 +285,9 @@ def create_interactive_plot(data, metrics):
         fig.add_hline(y=0, line_dash="solid", line_color="blue", row=2, col=1)
         
         # Highlight current point
-        current_date = dates[-1]
-        current_price = prices.iloc[-1]
-        current_std_away = std_away_plot.iloc[-1]
+        current_date = dates.iloc[-1] if len(dates) > 0 else closes.index[-1]
+        current_price = prices.iloc[-1] if len(prices) > 0 else closes.iloc[-1]
+        current_std_away = std_away_plot.iloc[-1] if len(std_away_plot) > 0 else metrics['std_away']
         
         fig.add_trace(
             go.Scatter(
@@ -383,11 +413,21 @@ def create_static_plot(data, metrics):
         logging.error(f"Error creating static plot: {e}")
         return None
 
-def create_html_dashboard(metrics, deviation_check, interactive_plot):
+def create_html_dashboard(metrics, deviation_check, interactive_plot=None):
     """Create HTML dashboard with embedded plot"""
     try:
-        # Convert plot to HTML
-        plot_html = pyo.plot(interactive_plot, output_type='div', include_plotlyjs=True)
+        # Convert plot to HTML if available
+        if interactive_plot:
+            plot_html = pyo.plot(interactive_plot, output_type='div', include_plotlyjs=True, config={'displayModeBar': True})
+        else:
+            # Fallback: show static image or placeholder
+            plot_html = """
+            <div style="text-align: center; padding: 50px; background: #f8f9fa; border-radius: 8px;">
+                <h3>Chart Generation Error</h3>
+                <p>Unable to generate interactive chart. Check logs for details.</p>
+                <p>Static chart may be available as sp500_analysis.png</p>
+            </div>
+            """
         
         # Determine status and styling
         if deviation_check['in_range']:
@@ -618,22 +658,31 @@ def main():
     logging.info("Creating interactive plot...")
     interactive_plot = create_interactive_plot(data, metrics)
     
+    # Always create HTML dashboard (even if plot fails)
+    logging.info("Creating HTML dashboard...")
+    dashboard_created = create_html_dashboard(metrics, deviation_check, interactive_plot)
+    
     if interactive_plot:
         # Save interactive plot
-        pyo.plot(interactive_plot, filename='sp500_interactive.html', auto_open=False)
-        logging.info("Interactive plot saved: sp500_interactive.html")
-        
-        # Create HTML dashboard
-        logging.info("Creating HTML dashboard...")
-        create_html_dashboard(metrics, deviation_check, interactive_plot)
+        try:
+            pyo.plot(interactive_plot, filename='sp500_interactive.html', auto_open=False)
+            logging.info("Interactive plot saved: sp500_interactive.html")
+        except Exception as e:
+            logging.error(f"Error saving interactive plot: {e}")
+    else:
+        logging.warning("Interactive plot creation failed")
     
     # Create static plot as backup
     logging.info("Creating static plot...")
     static_plot = create_static_plot(data, metrics)
     if static_plot:
-        static_plot.savefig('sp500_analysis.png', dpi=300, bbox_inches='tight')
-        plt.close(static_plot)
-        logging.info("Static plot saved: sp500_analysis.png")
+        try:
+            static_plot.savefig('sp500_analysis.png', dpi=300, bbox_inches='tight')
+            plt.close(static_plot)
+            logging.info("Static plot saved: sp500_analysis.png")
+        except Exception as e:
+            logging.error(f"Error saving static plot: {e}")
+            plt.close('all')  # Clean up any remaining plots
     
     # Save to JSON
     save_to_json(metrics, deviation_check)

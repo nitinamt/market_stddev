@@ -73,10 +73,10 @@ def calculate_metrics(data):
         # Calculate 200-day standard deviation
         std_200 = closes.rolling(window=200).std()
         
-        # Get current price (latest close)
-        current_price = closes.iloc[-1]
-        current_ma = ma_200.iloc[-1]
-        current_std = std_200.iloc[-1]
+        # Get current price (latest close) - ensure scalar values
+        current_price = float(closes.iloc[-1])
+        current_ma = float(ma_200.iloc[-1])
+        current_std = float(std_200.iloc[-1])
         
         # Calculate how many standard deviations away from the mean
         std_away = (current_price - current_ma) / current_std
@@ -96,8 +96,8 @@ def check_deviation_range(metrics):
     """Check if the current price is between 2 and 3 standard deviations"""
     std_away = abs(metrics['std_away'])  # Use absolute value for both directions
     
-    is_in_range = 2.0 <= std_away.values <= 3.0
-    direction = "above" if metrics['std_away'].values > 0 else "below"
+    is_in_range = 2.0 <= std_away <= 3.0
+    direction = "above" if metrics['std_away'] > 0 else "below"
     
     return {
         'in_range': is_in_range,
@@ -343,7 +343,7 @@ def create_interactive_plot(data, metrics):
 def create_static_plot(data, metrics):
     """Create static matplotlib chart as backup"""
     try:
-        plt.style.use('seaborn-v0_8')
+        plt.style.use('default')  # Changed from 'seaborn-v0_8' which may not be available
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
         
         # Calculate rolling statistics
@@ -605,6 +605,8 @@ def create_html_dashboard(metrics, deviation_check, interactive_plot=None):
     except Exception as e:
         logging.error(f"Error creating HTML dashboard: {e}")
         return False
+
+def send_notification(metrics, deviation_check):
     """Send notification if in alert range (placeholder for email/webhook)"""
     if deviation_check['in_range']:
         # Placeholder for notification system
@@ -633,8 +635,8 @@ def main():
     
     # Check if market is open (optional - remove if you want to run regardless)
     if not is_market_open():
-        logging.info("Market is currently closed. Skipping analysis.")
-        return
+        logging.info("Market is currently closed. Running analysis anyway...")
+        # Changed to continue running even when market is closed
     
     # Fetch data
     data = get_sp500_data()

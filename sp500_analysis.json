@@ -1,0 +1,17 @@
+{
+  "timestamp": "2025-06-30T19:12:40.053928",
+  "market_data": {
+    "current_price": 6195.9599609375,
+    "ma_200": 5833.081938476563,
+    "std_200": 226.38525649103403,
+    "std_away": 1.6029225051380898,
+    "date": "2025-06-30"
+  },
+  "analysis": {
+    "in_range": false,
+    "std_away": 1.6029225051380898,
+    "abs_std_away": 1.6029225051380898,
+    "direction": "above"
+  },
+  "alert": false
+}

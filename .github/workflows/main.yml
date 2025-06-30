@@ -74,6 +74,16 @@ jobs:
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@github.com'
         
+        # Show current status for debugging
+        echo "Current git status before cleanup:"
+        git status
+        
+        # Stash any changes and clean untracked files before switching branches
+        echo "Cleaning working directory..."
+        git add . 2>/dev/null || true
+        git stash push -m "Stash before gh-pages deployment" 2>/dev/null || true
+        git clean -fd  # Remove untracked files and directories
+        
         # Fetch all remote branches
         git fetch origin
         
@@ -89,15 +99,13 @@ jobs:
           git checkout --orphan gh-pages
         fi
         
-        # Clear existing content SAFELY (preserve .git directory)
-        # Remove all files except .git
-        find . -maxdepth 1 -not -name '.git' -not -name '.' -not -name '..' -exec rm -rf {} + 2>/dev/null || true
-        
-        # Remove any remaining tracked files
-        git ls-files -z | xargs -0 rm -f 2>/dev/null || true
+        # Clear existing content in gh-pages branch
+        echo "Clearing existing content in gh-pages branch..."
+        git rm -rf . 2>/dev/null || true
         
         # Copy website files from temp directory
         if [ "$(ls -A /tmp/website-deploy/ 2>/dev/null)" ]; then
+          echo "Copying files from temp directory..."
           cp /tmp/website-deploy/* . 2>/dev/null || echo "Copy failed"
           echo "Files copied to gh-pages branch"
           echo "Current directory contents:"
@@ -105,12 +113,6 @@ jobs:
         else
           echo "No files found in temp directory"
           echo "<html><body><h1>Error</h1><p>No dashboard files generated</p></body></html>" > index.html
-        fi
-        
-        # Verify we still have git
-        if [ ! -d .git ]; then
-          echo "ERROR: .git directory was accidentally deleted!"
-          exit 1
         fi
         
         # Add all new files
@@ -134,9 +136,14 @@ jobs:
           fi
         fi
         
-        # Switch back to main branch to preserve source files
+        # Switch back to main branch
+        echo "Switching back to main branch..."
         git checkout main
-        echo "Switched back to main branch"
+        
+        # Restore stashed changes if any
+        git stash pop 2>/dev/null || echo "No stash to restore"
+        
+        echo "Deployment complete, back on main branch"
         
     - name: Final verification
       run: |

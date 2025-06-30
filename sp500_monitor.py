@@ -96,8 +96,8 @@ def check_deviation_range(metrics):
     """Check if the current price is between 2 and 3 standard deviations"""
     std_away = abs(metrics['std_away'])  # Use absolute value for both directions
     
-    is_in_range = 2.0 <= std_away <= 3.0
-    direction = "above" if metrics['std_away'] > 0 else "below"
+    is_in_range = 2.0 <= std_away.values <= 3.0
+    direction = "above" if metrics['std_away'].values > 0 else "below"
     
     return {
         'in_range': is_in_range,

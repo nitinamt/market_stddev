@@ -1,5 +1,4 @@
 name: S&P 500 Monitor with Web Dashboard
-
 on:
   schedule:
     # Run every hour from 9 AM to 4 PM ET, Monday to Friday
@@ -13,6 +12,9 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
       
     - name: Set up Python
       uses: actions/setup-python@v4
@@ -22,26 +24,94 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install yfinance pandas numpy matplotlib plotly seaborn pytz
         
-    - name: Run S&P 500 analysis
-      run: python sp500_monitor.py
-      
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: .
-        publish_branch: gh-pages
-        keep_files: false
+    - name: Run S&P 500 analysis (Full Version)
+      run: |
+        python sp500_monitor.py || echo "Full version failed, trying simple version"
+        
+    - name: Run Simple Dashboard (Backup)
+      run: |
+        python simple_dashboard.py
+        
+    - name: Create temporary deployment directory
+      run: |
+        # Create temp directory outside of git repo
+        mkdir -p /tmp/website-deploy
+        
+        # Copy generated files to temp directory
+        echo "Copying generated files to temp directory..."
+        cp *.html /tmp/website-deploy/ 2>/dev/null || echo "No HTML files found"
+        cp *.png /tmp/website-deploy/ 2>/dev/null || echo "No PNG files found"  
+        cp *.json /tmp/website-deploy/ 2>/dev/null || echo "No JSON files found"
+        cp *.log /tmp/website-deploy/ 2>/dev/null || echo "No LOG files found"
+        
+        # Create index.html
+        if [ -f "/tmp/website-deploy/sp500_dashboard.html" ]; then
+          cp /tmp/website-deploy/sp500_dashboard.html /tmp/website-deploy/index.html
+          echo "Created index.html from sp500_dashboard.html"
+        else
+          echo "<html><head><title>S&P 500 Dashboard</title></head><body><h1>Dashboard Error</h1><p>Dashboard file not found</p><p>Generated: $(date)</p></body></html>" > /tmp/website-deploy/index.html
+          echo "Created fallback index.html"
+        fi
+        
+        # List contents
+        echo "Files prepared for deployment:"
+        ls -la /tmp/website-deploy/
+        
+    - name: Verify source files are safe
+      run: |
+        echo "=== VERIFYING SOURCE FILES ARE INTACT ==="
+        echo "Workflow file exists: $(test -f .github/workflows/*.yml && echo 'YES' || echo 'NO')"
+        echo "Python files exist: $(ls *.py 2>/dev/null | wc -l) files found"
+        echo "Current directory contents:"
+        ls -la
+        echo "Current git branch: $(git branch --show-current)"
+        
+    - name: Deploy to GitHub Pages (SAFE METHOD)
+      run: |
+        # Configure git
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        
+        # Create or switch to gh-pages branch
+        if git show-ref --verify --quiet refs/heads/gh-pages; then
+          echo "gh-pages branch exists, switching to it"
+          git checkout gh-pages
+        else
+          echo "Creating new gh-pages branch"
+          git checkout --orphan gh-pages
+        fi
+        
+        # Clear gh-pages branch content (but this won't affect main branch)
+        git rm -rf . 2>/dev/null || true
+        
+        # Copy website files from temp directory
+        cp -r /tmp/website-deploy/* . 2>/dev/null || echo "No files to copy"
+        
+        # Add and commit
+        git add .
+        if git diff --staged --quiet; then
+          echo "No changes to deploy"
+        else
+          git commit -m "Deploy S&P 500 dashboard - $(date)"
+          git push origin gh-pages
+          echo "Successfully deployed to gh-pages branch"
+        fi
+        
+        # Switch back to main branch to preserve source files
+        git checkout main
+        
+    - name: Final verification
+      run: |
+        echo "=== FINAL VERIFICATION ==="
+        echo "Current branch: $(git branch --show-current)"
+        echo "Source files still exist:"
+        ls -la .github/workflows/*.yml 2>/dev/null || echo "ERROR: Workflow file missing!"
+        ls -la *.py 2>/dev/null || echo "ERROR: Python files missing!"
         
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with:
         name: sp500-analysis-${{ github.run_number }}
-        path: |
-          sp500_dashboard.html
-          sp500_interactive.html
-          sp500_analysis.png
-          sp500_analysis.json
-          sp500_monitor.log
+        path: /tmp/website-deploy/

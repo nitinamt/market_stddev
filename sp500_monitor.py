@@ -170,7 +170,7 @@ def create_interactive_plot(data, metrics):
         # Skip NaN values for plotting
         valid_indices = ~ma_200.isna()
         plot_data = closes[valid_indices]
-        plot_dates = closes.index[valid_indices]
+        plot_dates = closes[valid_indices].index
         
         if len(plot_data) < 60:
             plot_start = 0
@@ -180,10 +180,10 @@ def create_interactive_plot(data, metrics):
         dates = plot_dates[plot_start:]
         prices = plot_data.iloc[plot_start:]
         ma_200_plot = ma_200[valid_indices].iloc[plot_start:]
-        upper_2std_plot = upper_2std[valid_indices].iloc[plot_start:]
-        lower_2std_plot = lower_2std[valid_indices].iloc[plot_start:]
-        upper_3std_plot = upper_3std[valid_indices].iloc[plot_start:]
-        lower_3std_plot = lower_3std[valid_indices].iloc[plot_start:]
+        upper_2std_plot = upper_2std[valid_indices].iloc[plot_start:].values
+        lower_2std_plot = lower_2std[valid_indices].iloc[plot_start:].values
+        upper_3std_plot = upper_3std[valid_indices].iloc[plot_start:].values
+        lower_3std_plot = lower_3std[valid_indices].iloc[plot_start:].values
         
         # Create subplot
         fig = make_subplots(
@@ -251,7 +251,7 @@ def create_interactive_plot(data, metrics):
         
         # Standard deviation subplot
         std_away_series = (closes - ma_200) / std_200
-        std_away_plot = std_away_series[valid_indices].iloc[plot_start:]
+        std_away_plot = std_away_series[valid_indices].iloc[plot_start:].values
         
         # Color points based on alert zone
         colors = []
@@ -285,9 +285,9 @@ def create_interactive_plot(data, metrics):
         fig.add_hline(y=0, line_dash="solid", line_color="blue", row=2, col=1)
         
         # Highlight current point
-        current_date = dates.iloc[-1] if len(dates) > 0 else closes.index[-1]
+        current_date = dates[-1] if len(dates) > 0 else closes.index[-1]
         current_price = prices.iloc[-1] if len(prices) > 0 else closes.iloc[-1]
-        current_std_away = std_away_plot.iloc[-1] if len(std_away_plot) > 0 else metrics['std_away']
+        current_std_away = std_away_plot[-1] if len(std_away_plot) > 0 else metrics['std_away']
         
         fig.add_trace(
             go.Scatter(
@@ -345,7 +345,7 @@ def create_static_plot(data, metrics):
     try:
         plt.style.use('default')  # Changed from 'seaborn-v0_8' which may not be available
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
-        
+                
         # Calculate rolling statistics
         closes = data['Close'].dropna()
         ma_200 = closes.rolling(window=200).mean()
@@ -359,7 +359,7 @@ def create_static_plot(data, metrics):
         
         # Plot last 60 days
         last_60_days = -60
-        dates = closes.index[last_60_days:]
+        dates = closes.index[last_60_days:].values
         
         # Main price chart
         ax1.plot(dates, closes.iloc[last_60_days:], 'k-', linewidth=2, label='S&P 500')
@@ -370,13 +370,13 @@ def create_static_plot(data, metrics):
         ax1.plot(dates, lower_3std.iloc[last_60_days:], 'r--', linewidth=1)
         
         # Fill alert zones
-        ax1.fill_between(dates, upper_2std.iloc[last_60_days:], upper_3std.iloc[last_60_days:], 
+        ax1.fill_between(dates, upper_2std.iloc[last_60_days:, 0], upper_3std.iloc[last_60_days:, 0].values, 
                         alpha=0.2, color='red', label='Alert Zone')
-        ax1.fill_between(dates, lower_2std.iloc[last_60_days:], lower_3std.iloc[last_60_days:], 
+        ax1.fill_between(dates, lower_2std.iloc[last_60_days:, 0], lower_3std.iloc[last_60_days:, 0], 
                         alpha=0.2, color='red')
         
         # Current point
-        current_price = closes.iloc[-1]
+        current_price = closes.iloc[-1].values[0]
         current_date = dates[-1]
         ax1.plot(current_date, current_price, 'ro', markersize=10, label='Current')
         
@@ -387,10 +387,10 @@ def create_static_plot(data, metrics):
         
         # Standard deviation chart
         std_away_series = (closes - ma_200) / std_200
-        ax2.plot(dates, std_away_series.iloc[last_60_days:], 'gray', linewidth=1)
-        ax2.scatter(dates, std_away_series.iloc[last_60_days:], 
+        ax2.plot(dates, std_away_series.iloc[last_60_days:,0], 'gray', linewidth=1)
+        ax2.scatter(dates, std_away_series.iloc[last_60_days:,0], 
                    c=['red' if abs(x) >= 2 and abs(x) <= 3 else 'green' if abs(x) < 2 else 'darkred' 
-                      for x in std_away_series.iloc[last_60_days:]], s=20)
+                      for x in std_away_series.iloc[last_60_days:,0]], s=20)
         
         ax2.axhline(y=2, color='orange', linestyle='--', alpha=0.7)
         ax2.axhline(y=-2, color='orange', linestyle='--', alpha=0.7)

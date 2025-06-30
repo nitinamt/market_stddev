@@ -77,12 +77,16 @@ jobs:
         # Show current status for debugging
         echo "Current git status before cleanup:"
         git status
+        echo "Generated files in current directory:"
+        ls -la *.html *.png *.json *.log 2>/dev/null || echo "No generated files found"
         
-        # Stash any changes and clean untracked files before switching branches
-        echo "Cleaning working directory..."
-        git add . 2>/dev/null || true
-        git stash push -m "Stash before gh-pages deployment" 2>/dev/null || true
-        git clean -fd  # Remove untracked files and directories
+        # Clean up generated files that would conflict with gh-pages branch
+        # These files are already copied to /tmp/website-deploy/ so we can safely remove them
+        echo "Removing generated files from main branch working directory..."
+        rm -f *.html *.png *.json *.log 2>/dev/null || true
+        
+        # Clean any other untracked files that might conflict
+        git clean -fd
         
         # Fetch all remote branches
         git fetch origin
@@ -103,13 +107,19 @@ jobs:
         echo "Clearing existing content in gh-pages branch..."
         git rm -rf . 2>/dev/null || true
         
-        # Copy website files from temp directory
+        # Copy NEW website files from temp directory
         if [ "$(ls -A /tmp/website-deploy/ 2>/dev/null)" ]; then
-          echo "Copying files from temp directory..."
+          echo "Copying FRESH generated files from temp directory..."
           cp /tmp/website-deploy/* . 2>/dev/null || echo "Copy failed"
-          echo "Files copied to gh-pages branch"
+          echo "Fresh files copied to gh-pages branch"
           echo "Current directory contents:"
           ls -la
+          echo "Verifying dashboard file:"
+          if [ -f "sp500_dashboard.html" ]; then
+            echo "✓ Dashboard file exists and is $(wc -c < sp500_dashboard.html) bytes"
+          else
+            echo "✗ Dashboard file missing!"
+          fi
         else
           echo "No files found in temp directory"
           echo "<html><body><h1>Error</h1><p>No dashboard files generated</p></body></html>" > index.html
@@ -124,15 +134,15 @@ jobs:
         else
           # Commit and push
           git commit -m "Deploy S&P 500 dashboard - $(date -u)"
-          echo "Attempting to push..."
+          echo "Attempting to push updated dashboard..."
           
           # Try normal push first, then force push if needed
           if git push origin gh-pages; then
-            echo "Successfully pushed to gh-pages"
+            echo "Successfully pushed UPDATED dashboard to gh-pages"
           else
             echo "Normal push failed, trying force push..."
             git push --force-with-lease origin gh-pages || git push --force origin gh-pages
-            echo "Force push completed"
+            echo "Force push of UPDATED dashboard completed"
           fi
         fi
         
@@ -140,10 +150,9 @@ jobs:
         echo "Switching back to main branch..."
         git checkout main
         
-        # Restore stashed changes if any
-        git stash pop 2>/dev/null || echo "No stash to restore"
-        
+        # DO NOT restore old files - let the fresh generated files stay in temp directory
         echo "Deployment complete, back on main branch"
+        echo "Fresh dashboard files are now live on gh-pages branch"
         
     - name: Final verification
       run: |

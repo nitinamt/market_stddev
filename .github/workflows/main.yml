@@ -82,39 +82,49 @@ jobs:
           echo "Remote gh-pages branch exists, checking it out"
           git checkout -B gh-pages origin/gh-pages
         elif git show-ref --verify --quiet refs/heads/gh-pages; then
-          echo "Local gh-pages branch exists, switching to it"
+          echo "Local gh-pages branch exists, switching to it" 
           git checkout gh-pages
         else
           echo "Creating new orphaned gh-pages branch"
           git checkout --orphan gh-pages
         fi
         
-        # Clear all existing content in gh-pages
-        git rm -rf . 2>/dev/null || true
-        rm -rf .* 2>/dev/null || true  # Remove hidden files too
+        # Clear existing content SAFELY (preserve .git directory)
+        # Remove all files except .git
+        find . -maxdepth 1 -not -name '.git' -not -name '.' -not -name '..' -exec rm -rf {} + 2>/dev/null || true
+        
+        # Remove any remaining tracked files
+        git ls-files -z | xargs -0 rm -f 2>/dev/null || true
         
         # Copy website files from temp directory
         if [ "$(ls -A /tmp/website-deploy/ 2>/dev/null)" ]; then
-          cp -r /tmp/website-deploy/* . 2>/dev/null || echo "Copy failed"
+          cp /tmp/website-deploy/* . 2>/dev/null || echo "Copy failed"
           echo "Files copied to gh-pages branch"
+          echo "Current directory contents:"
+          ls -la
         else
           echo "No files found in temp directory"
           echo "<html><body><h1>Error</h1><p>No dashboard files generated</p></body></html>" > index.html
         fi
         
-        # Add all files
+        # Verify we still have git
+        if [ ! -d .git ]; then
+          echo "ERROR: .git directory was accidentally deleted!"
+          exit 1
+        fi
+        
+        # Add all new files
         git add .
-        git add -A  # Ensure all deletions are staged too
         
         # Check if there are changes to commit
         if git diff --staged --quiet; then
           echo "No changes to deploy"
         else
-          # Commit and force push to handle any conflicts
+          # Commit and push
           git commit -m "Deploy S&P 500 dashboard - $(date -u)"
           echo "Attempting to push..."
           
-          # Try normal push first
+          # Try normal push first, then force push if needed
           if git push origin gh-pages; then
             echo "Successfully pushed to gh-pages"
           else
@@ -137,7 +147,7 @@ jobs:
         ls -la *.py 2>/dev/null || echo "ERROR: Python files missing!"
         
     - name: Upload artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v3
       with:
         name: sp500-analysis-${{ github.run_number }}
         path: /tmp/website-deploy/

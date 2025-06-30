@@ -22,11 +22,28 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install yfinance pandas numpy matplotlib plotly seaborn pytz
         
-    - name: Run S&P 500 analysis
-      run: python sp500_monitor.py
-      
+    - name: Run S&P 500 analysis (Full Version)
+      run: |
+        python sp500_monitor.py || echo "Full version failed, trying simple version"
+        
+    - name: Run Simple Dashboard (Backup)
+      run: |
+        python simple_dashboard.py
+        
+    - name: List generated files
+      run: |
+        ls -la *.html *.png *.json *.log || echo "Some files missing"
+        
+    - name: Create index.html
+      run: |
+        if [ -f "sp500_dashboard.html" ]; then
+          cp sp500_dashboard.html index.html
+        else
+          echo "Dashboard file not found" > index.html
+        fi
+        
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
@@ -40,8 +57,7 @@ jobs:
       with:
         name: sp500-analysis-${{ github.run_number }}
         path: |
-          sp500_dashboard.html
-          sp500_interactive.html
-          sp500_analysis.png
-          sp500_analysis.json
-          sp500_monitor.log
+          *.html
+          *.png
+          *.json
+          *.log

@@ -33,8 +33,10 @@ def get_data_and_create_simple_dashboard():
         
         # Convert to lists for JavaScript
         dates = [d.strftime('%Y-%m-%d') for d in last_30_days.index]
-        prices = last_30_days.tolist()
-        mas = ma_30_days.tolist()
+        # prices = last_30_days.tolist()
+        prices = last_30_days["^GSPC"].values.tolist()
+        # mas = ma_30_days.tolist()
+        mas = ma_30_days["^GSPC"].values.tolist()
         
         # Determine status
         abs_std = abs(std_away)

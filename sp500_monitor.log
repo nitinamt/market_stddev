@@ -1,20 +1,20 @@
-2025-08-07 13:56:52,229 - INFO - Starting S&P 500 standard deviation check...
-2025-08-07 13:56:52,524 - INFO - ==================================================
-2025-08-07 13:56:52,525 - INFO - S&P 500 Standard Deviation Analysis
-2025-08-07 13:56:52,525 - INFO - ==================================================
-2025-08-07 13:56:52,525 - INFO - Date: 2025-08-07
-2025-08-07 13:56:52,525 - INFO - Current S&P 500 Price: $6379.64
-2025-08-07 13:56:52,525 - INFO - 200-Day Moving Average: $5910.90
-2025-08-07 13:56:52,525 - INFO - 200-Day Standard Deviation: $269.93
-2025-08-07 13:56:52,525 - INFO - Standard Deviations from Mean: 1.74
-2025-08-07 13:56:52,525 - INFO - Direction: above average
-2025-08-07 13:56:52,525 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
-2025-08-07 13:56:52,525 - INFO - ==================================================
-2025-08-07 13:56:52,525 - INFO - Creating interactive plot...
-2025-08-07 13:56:52,693 - INFO - Creating HTML dashboard...
-2025-08-07 13:56:52,824 - INFO - HTML dashboard created: sp500_dashboard.html
-2025-08-07 13:56:52,872 - INFO - Interactive plot saved: sp500_interactive.html
-2025-08-07 13:56:52,872 - INFO - Creating static plot...
-2025-08-07 13:56:53,682 - INFO - Static plot saved: sp500_analysis.png
-2025-08-07 13:56:53,683 - INFO - Results saved to sp500_analysis.json
-2025-08-07 13:56:53,683 - INFO - Analysis complete with visualizations.
+2025-08-07 15:44:54,226 - INFO - Starting S&P 500 standard deviation check...
+2025-08-07 15:44:54,609 - INFO - ==================================================
+2025-08-07 15:44:54,609 - INFO - S&P 500 Standard Deviation Analysis
+2025-08-07 15:44:54,609 - INFO - ==================================================
+2025-08-07 15:44:54,609 - INFO - Date: 2025-08-07
+2025-08-07 15:44:54,609 - INFO - Current S&P 500 Price: $6337.83
+2025-08-07 15:44:54,609 - INFO - 200-Day Moving Average: $5910.69
+2025-08-07 15:44:54,610 - INFO - 200-Day Standard Deviation: $269.58
+2025-08-07 15:44:54,610 - INFO - Standard Deviations from Mean: 1.58
+2025-08-07 15:44:54,610 - INFO - Direction: above average
+2025-08-07 15:44:54,610 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
+2025-08-07 15:44:54,610 - INFO - ==================================================
+2025-08-07 15:44:54,610 - INFO - Creating interactive plot...
+2025-08-07 15:44:54,780 - INFO - Creating HTML dashboard...
+2025-08-07 15:44:54,877 - INFO - HTML dashboard created: sp500_dashboard.html
+2025-08-07 15:44:54,924 - INFO - Interactive plot saved: sp500_interactive.html
+2025-08-07 15:44:54,924 - INFO - Creating static plot...
+2025-08-07 15:44:55,727 - INFO - Static plot saved: sp500_analysis.png
+2025-08-07 15:44:55,727 - INFO - Results saved to sp500_analysis.json
+2025-08-07 15:44:55,727 - INFO - Analysis complete with visualizations.

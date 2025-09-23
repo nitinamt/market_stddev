@@ -1,28 +1,20 @@
-2025-09-22 19:35:07,546 - INFO - Starting S&P 500 standard deviation check...
-2025-09-22 19:35:08,360 - INFO - ==================================================
-2025-09-22 19:35:08,361 - INFO - S&P 500 Standard Deviation Analysis
-2025-09-22 19:35:08,361 - INFO - ==================================================
-2025-09-22 19:35:08,361 - INFO - Date: 2025-09-22
-2025-09-22 19:35:08,361 - INFO - Current S&P 500 Price: $6696.48
-2025-09-22 19:35:08,361 - INFO - 200-Day Moving Average: $6003.72
-2025-09-22 19:35:08,361 - INFO - 200-Day Standard Deviation: $342.35
-2025-09-22 19:35:08,361 - INFO - Standard Deviations from Mean: 2.02
-2025-09-22 19:35:08,361 - INFO - Direction: above average
-2025-09-22 19:35:08,361 - WARNING - 🚨 ALERT: S&P 500 is between 2-3 standard deviations from 200-day average!
-2025-09-22 19:35:08,361 - WARNING - This indicates unusual market conditions (2.02 std dev)
-2025-09-22 19:35:08,362 - INFO - ==================================================
-2025-09-22 19:35:08,362 - INFO - Creating interactive plot...
-2025-09-22 19:35:08,520 - INFO - Creating HTML dashboard...
-2025-09-22 19:35:08,666 - INFO - HTML dashboard created: sp500_dashboard.html
-2025-09-22 19:35:08,711 - INFO - Interactive plot saved: sp500_interactive.html
-2025-09-22 19:35:08,711 - INFO - Creating static plot...
-2025-09-22 19:35:09,466 - INFO - Static plot saved: sp500_analysis.png
-2025-09-22 19:35:09,467 - INFO - Results saved to sp500_analysis.json
-2025-09-22 19:35:09,467 - INFO - NOTIFICATION TRIGGERED:
-2025-09-22 19:35:09,467 - INFO - 🚨 S&P 500 ALERT 🚨
-Price: $6696.48
-200-day MA: $6003.72
-Standard Deviations: 2.02
-Direction: above average
-Date: 2025-09-22
-2025-09-22 19:35:09,467 - INFO - Analysis complete with visualizations.
+2025-09-23 13:44:16,225 - INFO - Starting S&P 500 standard deviation check...
+2025-09-23 13:44:16,537 - INFO - ==================================================
+2025-09-23 13:44:16,537 - INFO - S&P 500 Standard Deviation Analysis
+2025-09-23 13:44:16,537 - INFO - ==================================================
+2025-09-23 13:44:16,537 - INFO - Date: 2025-09-23
+2025-09-23 13:44:16,537 - INFO - Current S&P 500 Price: $6693.42
+2025-09-23 13:44:16,537 - INFO - 200-Day Moving Average: $6006.92
+2025-09-23 13:44:16,537 - INFO - 200-Day Standard Deviation: $345.77
+2025-09-23 13:44:16,537 - INFO - Standard Deviations from Mean: 1.99
+2025-09-23 13:44:16,537 - INFO - Direction: above average
+2025-09-23 13:44:16,538 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
+2025-09-23 13:44:16,538 - INFO - ==================================================
+2025-09-23 13:44:16,538 - INFO - Creating interactive plot...
+2025-09-23 13:44:16,695 - INFO - Creating HTML dashboard...
+2025-09-23 13:44:16,843 - INFO - HTML dashboard created: sp500_dashboard.html
+2025-09-23 13:44:16,890 - INFO - Interactive plot saved: sp500_interactive.html
+2025-09-23 13:44:16,890 - INFO - Creating static plot...
+2025-09-23 13:44:17,655 - INFO - Static plot saved: sp500_analysis.png
+2025-09-23 13:44:17,655 - INFO - Results saved to sp500_analysis.json
+2025-09-23 13:44:17,655 - INFO - Analysis complete with visualizations.

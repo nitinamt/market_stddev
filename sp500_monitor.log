@@ -1,20 +1,21 @@
-2025-11-18 19:34:45,531 - INFO - Starting S&P 500 standard deviation check...
-2025-11-18 19:34:45,918 - INFO - ==================================================
-2025-11-18 19:34:45,919 - INFO - S&P 500 Standard Deviation Analysis
-2025-11-18 19:34:45,919 - INFO - ==================================================
-2025-11-18 19:34:45,919 - INFO - Date: 2025-11-18
-2025-11-18 19:34:45,919 - INFO - Current S&P 500 Price: $6642.49
-2025-11-18 19:34:45,919 - INFO - 200-Day Moving Average: $6154.87
-2025-11-18 19:34:45,919 - INFO - 200-Day Standard Deviation: $450.95
-2025-11-18 19:34:45,919 - INFO - Standard Deviations from Mean: 1.08
-2025-11-18 19:34:45,919 - INFO - Direction: above average
-2025-11-18 19:34:45,919 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
-2025-11-18 19:34:45,919 - INFO - ==================================================
-2025-11-18 19:34:45,919 - INFO - Creating interactive plot...
-2025-11-18 19:34:46,108 - INFO - Creating HTML dashboard...
-2025-11-18 19:34:46,227 - INFO - HTML dashboard created: sp500_dashboard.html
-2025-11-18 19:34:46,274 - INFO - Interactive plot saved: sp500_interactive.html
-2025-11-18 19:34:46,275 - INFO - Creating static plot...
-2025-11-18 19:34:47,044 - INFO - Static plot saved: sp500_analysis.png
-2025-11-18 19:34:47,044 - INFO - Results saved to sp500_analysis.json
-2025-11-18 19:34:47,044 - INFO - Analysis complete with visualizations.
+2025-11-19 13:48:23,227 - INFO - Starting S&P 500 standard deviation check...
+2025-11-19 13:48:23,239 - INFO - Market is currently closed. Running analysis anyway...
+2025-11-19 13:48:23,441 - INFO - ==================================================
+2025-11-19 13:48:23,442 - INFO - S&P 500 Standard Deviation Analysis
+2025-11-19 13:48:23,442 - INFO - ==================================================
+2025-11-19 13:48:23,442 - INFO - Date: 2025-11-18
+2025-11-19 13:48:23,442 - INFO - Current S&P 500 Price: $6617.32
+2025-11-19 13:48:23,442 - INFO - 200-Day Moving Average: $6154.74
+2025-11-19 13:48:23,442 - INFO - 200-Day Standard Deviation: $450.81
+2025-11-19 13:48:23,442 - INFO - Standard Deviations from Mean: 1.03
+2025-11-19 13:48:23,442 - INFO - Direction: above average
+2025-11-19 13:48:23,442 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
+2025-11-19 13:48:23,442 - INFO - ==================================================
+2025-11-19 13:48:23,442 - INFO - Creating interactive plot...
+2025-11-19 13:48:23,615 - INFO - Creating HTML dashboard...
+2025-11-19 13:48:23,781 - INFO - HTML dashboard created: sp500_dashboard.html
+2025-11-19 13:48:23,831 - INFO - Interactive plot saved: sp500_interactive.html
+2025-11-19 13:48:23,831 - INFO - Creating static plot...
+2025-11-19 13:48:24,605 - INFO - Static plot saved: sp500_analysis.png
+2025-11-19 13:48:24,605 - INFO - Results saved to sp500_analysis.json
+2025-11-19 13:48:24,606 - INFO - Analysis complete with visualizations.

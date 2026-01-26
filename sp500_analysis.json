@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-01-26T13:58:59.265213",
+  "market_data": {
+    "current_price": 6915.60986328125,
+    "ma_200": 6387.289887695312,
+    "std_200": 463.56436274450476,
+    "std_away": 1.1396906622805327,
+    "date": "2026-01-23"
+  },
+  "analysis": {
+    "in_range": false,
+    "std_away": 1.1396906622805327,
+    "abs_std_away": 1.1396906622805327,
+    "direction": "above"
+  },
+  "alert": false
+}

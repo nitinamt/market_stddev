@@ -1,21 +1,20 @@
-2026-03-04 14:08:19,836 - INFO - Starting S&P 500 standard deviation check...
-2026-03-04 14:08:19,849 - INFO - Market is currently closed. Running analysis anyway...
-2026-03-04 14:08:20,174 - INFO - ==================================================
-2026-03-04 14:08:20,174 - INFO - S&P 500 Standard Deviation Analysis
-2026-03-04 14:08:20,174 - INFO - ==================================================
-2026-03-04 14:08:20,174 - INFO - Date: 2026-03-03
-2026-03-04 14:08:20,174 - INFO - Current S&P 500 Price: $6816.63
-2026-03-04 14:08:20,174 - INFO - 200-Day Moving Average: $6569.52
-2026-03-04 14:08:20,174 - INFO - 200-Day Standard Deviation: $328.91
-2026-03-04 14:08:20,174 - INFO - Standard Deviations from Mean: 0.75
-2026-03-04 14:08:20,174 - INFO - Direction: above average
-2026-03-04 14:08:20,175 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
-2026-03-04 14:08:20,175 - INFO - ==================================================
-2026-03-04 14:08:20,175 - INFO - Creating interactive plot...
-2026-03-04 14:08:20,356 - INFO - Creating HTML dashboard...
-2026-03-04 14:08:20,461 - INFO - HTML dashboard created: sp500_dashboard.html
-2026-03-04 14:08:20,511 - INFO - Interactive plot saved: sp500_interactive.html
-2026-03-04 14:08:20,511 - INFO - Creating static plot...
-2026-03-04 14:08:21,308 - INFO - Static plot saved: sp500_analysis.png
-2026-03-04 14:08:21,308 - INFO - Results saved to sp500_analysis.json
-2026-03-04 14:08:21,308 - INFO - Analysis complete with visualizations.
+2026-03-04 16:02:20,101 - INFO - Starting S&P 500 standard deviation check...
+2026-03-04 16:02:20,981 - INFO - ==================================================
+2026-03-04 16:02:20,982 - INFO - S&P 500 Standard Deviation Analysis
+2026-03-04 16:02:20,982 - INFO - ==================================================
+2026-03-04 16:02:20,982 - INFO - Date: 2026-03-04
+2026-03-04 16:02:20,982 - INFO - Current S&P 500 Price: $6878.27
+2026-03-04 16:02:20,982 - INFO - 200-Day Moving Average: $6574.33
+2026-03-04 16:02:20,982 - INFO - 200-Day Standard Deviation: $326.34
+2026-03-04 16:02:20,982 - INFO - Standard Deviations from Mean: 0.93
+2026-03-04 16:02:20,982 - INFO - Direction: above average
+2026-03-04 16:02:20,982 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
+2026-03-04 16:02:20,982 - INFO - ==================================================
+2026-03-04 16:02:20,982 - INFO - Creating interactive plot...
+2026-03-04 16:02:21,146 - INFO - Creating HTML dashboard...
+2026-03-04 16:02:21,243 - INFO - HTML dashboard created: sp500_dashboard.html
+2026-03-04 16:02:21,291 - INFO - Interactive plot saved: sp500_interactive.html
+2026-03-04 16:02:21,291 - INFO - Creating static plot...
+2026-03-04 16:02:22,077 - INFO - Static plot saved: sp500_analysis.png
+2026-03-04 16:02:22,077 - INFO - Results saved to sp500_analysis.json
+2026-03-04 16:02:22,077 - INFO - Analysis complete with visualizations.

@@ -1,20 +1,6 @@
-2026-03-19 18:12:09,484 - INFO - Starting S&P 500 standard deviation check...
-2026-03-19 18:12:09,820 - INFO - ==================================================
-2026-03-19 18:12:09,820 - INFO - S&P 500 Standard Deviation Analysis
-2026-03-19 18:12:09,820 - INFO - ==================================================
-2026-03-19 18:12:09,820 - INFO - Date: 2026-03-19
-2026-03-19 18:12:09,820 - INFO - Current S&P 500 Price: $6582.20
-2026-03-19 18:12:09,820 - INFO - 200-Day Moving Average: $6618.93
-2026-03-19 18:12:09,820 - INFO - 200-Day Standard Deviation: $284.15
-2026-03-19 18:12:09,820 - INFO - Standard Deviations from Mean: -0.13
-2026-03-19 18:12:09,820 - INFO - Direction: below average
-2026-03-19 18:12:09,820 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
-2026-03-19 18:12:09,820 - INFO - ==================================================
-2026-03-19 18:12:09,820 - INFO - Creating interactive plot...
-2026-03-19 18:12:09,986 - INFO - Creating HTML dashboard...
-2026-03-19 18:12:10,084 - INFO - HTML dashboard created: sp500_dashboard.html
-2026-03-19 18:12:10,131 - INFO - Interactive plot saved: sp500_interactive.html
-2026-03-19 18:12:10,132 - INFO - Creating static plot...
-2026-03-19 18:12:10,941 - INFO - Static plot saved: sp500_analysis.png
-2026-03-19 18:12:10,941 - INFO - Results saved to sp500_analysis.json
-2026-03-19 18:12:10,941 - INFO - Analysis complete with visualizations.
+2026-03-19 19:59:53,266 - INFO - Starting S&P 500 standard deviation check...
+2026-03-19 19:59:53,531 - ERROR - 
+1 Failed download:
+2026-03-19 19:59:53,532 - ERROR - ['^GSPC']: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')
+2026-03-19 19:59:53,536 - ERROR - Error fetching S&P 500 data: No data retrieved from Yahoo Finance
+2026-03-19 19:59:53,536 - ERROR - Failed to fetch data. Exiting.

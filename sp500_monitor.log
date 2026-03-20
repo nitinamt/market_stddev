@@ -1,6 +1,20 @@
-2026-03-19 19:59:53,266 - INFO - Starting S&P 500 standard deviation check...
-2026-03-19 19:59:53,531 - ERROR - 
-1 Failed download:
-2026-03-19 19:59:53,532 - ERROR - ['^GSPC']: YFRateLimitError('Too Many Requests. Rate limited. Try after a while.')
-2026-03-19 19:59:53,536 - ERROR - Error fetching S&P 500 data: No data retrieved from Yahoo Finance
-2026-03-19 19:59:53,536 - ERROR - Failed to fetch data. Exiting.
+2026-03-20 14:10:43,202 - INFO - Starting S&P 500 standard deviation check...
+2026-03-20 14:10:43,839 - INFO - ==================================================
+2026-03-20 14:10:43,839 - INFO - S&P 500 Standard Deviation Analysis
+2026-03-20 14:10:43,839 - INFO - ==================================================
+2026-03-20 14:10:43,839 - INFO - Date: 2026-03-20
+2026-03-20 14:10:43,840 - INFO - Current S&P 500 Price: $6556.01
+2026-03-20 14:10:43,840 - INFO - 200-Day Moving Average: $6621.98
+2026-03-20 14:10:43,840 - INFO - 200-Day Standard Deviation: $280.42
+2026-03-20 14:10:43,840 - INFO - Standard Deviations from Mean: -0.24
+2026-03-20 14:10:43,840 - INFO - Direction: below average
+2026-03-20 14:10:43,840 - INFO - ✅ Normal: S&P 500 is within 2 standard deviations
+2026-03-20 14:10:43,840 - INFO - ==================================================
+2026-03-20 14:10:43,840 - INFO - Creating interactive plot...
+2026-03-20 14:10:44,005 - INFO - Creating HTML dashboard...
+2026-03-20 14:10:44,104 - INFO - HTML dashboard created: sp500_dashboard.html
+2026-03-20 14:10:44,152 - INFO - Interactive plot saved: sp500_interactive.html
+2026-03-20 14:10:44,152 - INFO - Creating static plot...
+2026-03-20 14:10:44,951 - INFO - Static plot saved: sp500_analysis.png
+2026-03-20 14:10:44,951 - INFO - Results saved to sp500_analysis.json
+2026-03-20 14:10:44,951 - INFO - Analysis complete with visualizations.

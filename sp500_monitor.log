@@ -1,29 +1,28 @@
-2026-05-11 20:58:31,056 - INFO - Starting S&P 500 standard deviation check...
-2026-05-11 20:58:31,068 - INFO - Market is currently closed. Running analysis anyway...
-2026-05-11 20:58:31,521 - INFO - ==================================================
-2026-05-11 20:58:31,521 - INFO - S&P 500 Standard Deviation Analysis
-2026-05-11 20:58:31,521 - INFO - ==================================================
-2026-05-11 20:58:31,521 - INFO - Date: 2026-05-11
-2026-05-11 20:58:31,521 - INFO - Current S&P 500 Price: $7412.84
-2026-05-11 20:58:31,521 - INFO - 200-Day Moving Average: $6758.66
-2026-05-11 20:58:31,521 - INFO - 200-Day Standard Deviation: $229.68
-2026-05-11 20:58:31,521 - INFO - Standard Deviations from Mean: 2.85
-2026-05-11 20:58:31,521 - INFO - Direction: above average
-2026-05-11 20:58:31,521 - WARNING - 🚨 ALERT: S&P 500 is between 2-3 standard deviations from 200-day average!
-2026-05-11 20:58:31,521 - WARNING - This indicates unusual market conditions (2.85 std dev)
-2026-05-11 20:58:31,521 - INFO - ==================================================
-2026-05-11 20:58:31,521 - INFO - Creating interactive plot...
-2026-05-11 20:58:31,684 - INFO - Creating HTML dashboard...
-2026-05-11 20:58:31,779 - INFO - HTML dashboard created: sp500_dashboard.html
-2026-05-11 20:58:31,823 - INFO - Interactive plot saved: sp500_interactive.html
-2026-05-11 20:58:31,823 - INFO - Creating static plot...
-2026-05-11 20:58:32,619 - INFO - Static plot saved: sp500_analysis.png
-2026-05-11 20:58:32,619 - INFO - Results saved to sp500_analysis.json
-2026-05-11 20:58:32,620 - INFO - NOTIFICATION TRIGGERED:
-2026-05-11 20:58:32,620 - INFO - 🚨 S&P 500 ALERT 🚨
-Price: $7412.84
-200-day MA: $6758.66
-Standard Deviations: 2.85
+2026-05-12 15:57:58,294 - INFO - Starting S&P 500 standard deviation check...
+2026-05-12 15:57:58,716 - INFO - ==================================================
+2026-05-12 15:57:58,716 - INFO - S&P 500 Standard Deviation Analysis
+2026-05-12 15:57:58,716 - INFO - ==================================================
+2026-05-12 15:57:58,716 - INFO - Date: 2026-05-12
+2026-05-12 15:57:58,716 - INFO - Current S&P 500 Price: $7347.80
+2026-05-12 15:57:58,717 - INFO - 200-Day Moving Average: $6763.45
+2026-05-12 15:57:58,717 - INFO - 200-Day Standard Deviation: $231.91
+2026-05-12 15:57:58,717 - INFO - Standard Deviations from Mean: 2.52
+2026-05-12 15:57:58,717 - INFO - Direction: above average
+2026-05-12 15:57:58,717 - WARNING - 🚨 ALERT: S&P 500 is between 2-3 standard deviations from 200-day average!
+2026-05-12 15:57:58,717 - WARNING - This indicates unusual market conditions (2.52 std dev)
+2026-05-12 15:57:58,717 - INFO - ==================================================
+2026-05-12 15:57:58,717 - INFO - Creating interactive plot...
+2026-05-12 15:57:58,889 - INFO - Creating HTML dashboard...
+2026-05-12 15:57:58,992 - INFO - HTML dashboard created: sp500_dashboard.html
+2026-05-12 15:57:59,035 - INFO - Interactive plot saved: sp500_interactive.html
+2026-05-12 15:57:59,035 - INFO - Creating static plot...
+2026-05-12 15:57:59,841 - INFO - Static plot saved: sp500_analysis.png
+2026-05-12 15:57:59,841 - INFO - Results saved to sp500_analysis.json
+2026-05-12 15:57:59,841 - INFO - NOTIFICATION TRIGGERED:
+2026-05-12 15:57:59,841 - INFO - 🚨 S&P 500 ALERT 🚨
+Price: $7347.80
+200-day MA: $6763.45
+Standard Deviations: 2.52
 Direction: above average
-Date: 2026-05-11
-2026-05-11 20:58:32,620 - INFO - Analysis complete with visualizations.
+Date: 2026-05-12
+2026-05-12 15:57:59,841 - INFO - Analysis complete with visualizations.

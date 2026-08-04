@@ -1,17 +1,17 @@
 {
-  "timestamp": "2026-08-03T20:42:01.925696",
+  "timestamp": "2026-08-04T15:44:07.337683",
   "market_data": {
-    "current_price": 7600.5,
-    "ma_200": 7028.887702636719,
-    "std_200": 322.27485103752315,
-    "std_away": 1.7736795022107603,
-    "date": "2026-08-03"
+    "current_price": 7705.0,
+    "ma_200": 7034.05740234375,
+    "std_200": 324.7890455630422,
+    "std_away": 2.0657796401141812,
+    "date": "2026-08-04"
   },
   "analysis": {
-    "in_range": false,
-    "std_away": 1.7736795022107603,
-    "abs_std_away": 1.7736795022107603,
+    "in_range": true,
+    "std_away": 2.0657796401141812,
+    "abs_std_away": 2.0657796401141812,
     "direction": "above"
   },
-  "alert": false
+  "alert": true
 }
